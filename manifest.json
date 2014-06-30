@@ -1,0 +1,13 @@
+{
+	  "name": "YCSS",
+	  "version": "0.1",
+	  "description": "CSS, Y U No Work",
+	  "devtools_page": "ycss_devtools.html",
+	  "manifest_version": 2,
+	  "permissions": ["tabs", "http://*/*", "https://*/*"],
+	  "background": {
+		 "scripts": [
+		   "background.js"
+		 ]
+	  }
+}
