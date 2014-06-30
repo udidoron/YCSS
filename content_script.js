@@ -1,25 +1,27 @@
-console.log('Hello');
 function cssLint(elem) {
 	var strategies = [directionsWithPositionStatic, clearfix];
 	var style = window.getComputedStyle(elem);
-	console.log('World');
-	console.log(elem);
 
-	return strategies.reduce(function(msg, strategy) {
+	var result =  strategies.reduce(function(msg, strategy) {
 		var result = strategy({
 			elem: elem,
 			style: style
 		});
 		return (result) ? msg + result + "\n" : msg;
 	}, '');
+
+	return result;
 }
 
 function clearfix(obj) {
-	var areAllSonsFloat = obj.elem.childNodes.reduce(function(result, elem) {
-		return result || window.getComputedStyle(elem).float === '';
-	}, false);
+	var areAllSonsFloat = obj.elem.childNodes && 
+		Array.prototype.reduce.call(obj.elem.childNodes, function(result, elem) {
+		var style = window.getComputedStyle(elem);
+		return result && ((style && style.float !== 'none')
+			|| ((elem instanceof Text) && elem.textContent.trim().length === 0));
+	}, true);
 
-	return (areAllSonsFloat) ? 'Your container is collapsed. Try clearfix.' : '';
+	return (areAllSonsFloat) ? 'Your container might be collapsed. Try clearfix.' : '';
 }
 
 function directionsWithPositionStatic(obj) {
@@ -33,3 +35,5 @@ function directionsWithPositionStatic(obj) {
 
 	return '';
 }
+
+//# sourceURL=content_script.js
