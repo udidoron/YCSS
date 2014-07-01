@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+
+<head>
+
+<style>
+.container {
+	width: 100%;
+	background-color: red;
+}
+
+.cf:before,
+.cf:after {
+	    content: " ";
+		display: table;
+}
+
+.cf:after {
+	    clear: both;
+}
+
+.container div {
+	width: 50%;
+	float: left;
+}
+</style>
+
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+
+</head>
+
+<body>
+<div id="blocker"></div>
+<div class="container cf" style="left: 0">
+	<div>
+		hello
+	</div>
+	<div>
+		world
+	</div>
+</div>
+<div id="outer" style="position:relative;color: white;width:80%;background-color:purple;margin:0 auto">  
+	<div>Hello</div>
+	<div style="width:100%; text-align: center">
+		<div id="inner" style="display:inline-block;background-color:blue">Foo foo</div>
+	<div>
+	<div style="top:0; right:10%">right</div>
+</div>
+
+<script>
+	document.body.addEventListener('click', function(event) {
+		console.log(event.target);
+	}, false);
+</script>
+</body>
+
+</html>
