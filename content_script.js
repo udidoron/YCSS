@@ -70,8 +70,13 @@ function directionsWithPositionStatic(obj) {
 	var isDirectionSet = directions.reduce(function(result, direction) {
 		return result || (obj.style[direction] !== 'auto')
 	}, false);
-	if (isDirectionSet && obj.style.position === 'static') {
-		return 'Coordinates and/or z-index are given, but position is static';
+	if (obj.style.position === 'static') {
+		obj.elem.style.position = 'relative';
+		isDirectionSet = isDirectionSet || window.getComputedStyle(obj.elem).zIndex !== 'auto';
+		obj.elem.style.position = 'static';
+		if (isDirectionSet) {
+			return 'Coordinates and/or z-index are given, but position is static';
+		}
 	}
 
 	return '';
