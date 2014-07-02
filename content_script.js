@@ -42,10 +42,6 @@ function cssLint(elem) {
 	return result;
 }
 
-function turnGreen(elem) {
-	elem.style.backgroundColor = 'green';
-}
-
 function editElement(elem) {
 	document.body.appendChild(screenElement);
 	var elemParent = elem.parentNode;
@@ -55,21 +51,21 @@ function editElement(elem) {
 }
 
 function clearfix(obj) {
-	var areAllSonsFloat = obj.elem.childNodes && 
-		Array.prototype.reduce.call(obj.elem.childNodes, function(result, elem) {
-		var style = window.getComputedStyle(elem);
-		return result && ((style && style.float !== 'none')
-			|| ((elem instanceof Text) && elem.textContent.trim().length === 0));
-	}, true);
+	var areAllSonsFloat = obj.elem.childNodes &&
+		Array.prototype.every.call(obj.elem.childNodes, function(elem) {
+			var style = window.getComputedStyle(elem);
+			return (style && style.cssFloat !== 'none')
+				|| ((elem instanceof Text) && elem.textContent.trim().length === 0);
+		});
 
 	return (areAllSonsFloat) ? 'Your container might be collapsed. Try clearfix.' : '';
 }
 
 function directionsWithPositionStatic(obj) {
 	var directions = ['top', 'left', 'right', 'bottom'];
-	var isDirectionSet = directions.reduce(function(result, direction) {
-		return result || (obj.style[direction] !== 'auto')
-	}, false);
+	var isDirectionSet = directions.some(function(direction) {
+		return obj.style[direction] !== 'auto';
+	});
 	if (obj.style.position === 'static') {
 		obj.elem.style.position = 'relative';
 		isDirectionSet = isDirectionSet || window.getComputedStyle(obj.elem).zIndex !== 'auto';
